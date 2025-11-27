@@ -3,10 +3,11 @@
 namespace Technobase\Watchdog\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class TelegramErrorNotification extends Notification
+class TelegramErrorNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -22,6 +23,12 @@ class TelegramErrorNotification extends Notification
         $this->title = $title;
         $this->message = $message;
         $this->context = $context;
+
+        // Set queue connection from config
+        $queueConnection = config('watchdog.queue_connection');
+        if ($queueConnection) {
+            $this->onConnection($queueConnection);
+        }
     }
 
     /**

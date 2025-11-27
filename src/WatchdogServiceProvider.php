@@ -61,19 +61,27 @@ class WatchdogServiceProvider extends ServiceProvider
                 }
 
                 try {
-                    Notification::route('telegram', $chatId)
-                        ->notify(new TelegramErrorNotification(
-                            title: config('watchdog.notification_title', '🚨 Application Error'),
-                            message: $e->getMessage(),
-                            context: [
-                                'file' => $e->getFile(),
-                                'line' => $e->getLine(),
-                                'url' => request()?->fullUrl(),
-                                'user_id' => Auth::id(),
-                                'environment' => app()->environment(),
-                                'trace' => $e->getTraceAsString(),
-                            ],
-                        ));
+                    $notification = new TelegramErrorNotification(
+                        title: config('watchdog.notification_title', '🚨 Application Error'),
+                        message: $e->getMessage(),
+                        context: [
+                            'file' => $e->getFile(),
+                            'line' => $e->getLine(),
+                            'url' => request()?->fullUrl(),
+                            'user_id' => Auth::id(),
+                            'environment' => app()->environment(),
+                            'trace' => $e->getTraceAsString(),
+                        ],
+                    );
+
+                    $notifiable = Notification::route('telegram', $chatId);
+
+                    // Check if notifications should be queued
+                    if (config('watchdog.queue', true)) {
+                        $notifiable->notify($notification);
+                    } else {
+                        $notifiable->notifyNow($notification);
+                    }
                 } catch (Throwable $notificationError) {
                     // Silently fail to prevent infinite loops
                     // Optionally log the notification error
