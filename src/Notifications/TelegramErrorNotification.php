@@ -5,11 +5,27 @@ namespace Technobase\Watchdog\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class TelegramErrorNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    /**
+     * The number of times the job may be attempted.
+     */
+    public int $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying.
+     */
+    public int $backoff = 60;
+
+    /**
+     * The maximum number of seconds the job can run.
+     */
+    public int $timeout = 30;
 
     private string $title;
     private string $message;
@@ -78,5 +94,24 @@ class TelegramErrorNotification extends Notification implements ShouldQueue
             ->content($content)
             ->token(config('watchdog.bot_token', ''))
             ->options(['parse_mode' => 'Markdown']);
+    }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(\Throwable $exception): void
+    {
+        Log::error('Failed to send Telegram error notification', [
+            'title' => $this->title,
+            'message' => $this->message,
+            'context' => $this->context,
+            'exception' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
+
+        // You could also:
+        // - Send an email notification as fallback
+        // - Store in database for manual review
+        // - Alert via alternative channel (Slack, email, etc.)
     }
 }

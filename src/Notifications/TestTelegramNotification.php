@@ -5,11 +5,27 @@ namespace Technobase\Watchdog\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramMessage;
 
 class TestTelegramNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    /**
+     * The number of times the job may be attempted.
+     */
+    public int $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying.
+     */
+    public int $backoff = 60;
+
+    /**
+     * The maximum number of seconds the job can run.
+     */
+    public int $timeout = 30;
 
     private string $message;
 
@@ -39,7 +55,19 @@ class TestTelegramNotification extends Notification implements ShouldQueue
     {
         return TelegramMessage::create()
             ->content("🧪 **Test Notification**\n\n{$this->message}\n\n✅ Watchdog Telegram integration is working!")
-            ->token(config('watchdog.telegram_bot_token'),'')
+            ->token(config('watchdog.bot_token', ''))
             ->options(['parse_mode' => 'Markdown']);
+    }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(\Throwable $exception): void
+    {
+        Log::error('Failed to send Telegram test notification', [
+            'message' => $this->message,
+            'exception' => $exception->getMessage(),
+            'trace' => $exception->getTraceAsString(),
+        ]);
     }
 }
