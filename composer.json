@@ -1,5 +1,5 @@
 {
-    "name": "technobase/watchdog",
+    "name": "technobase/alert",
     "description": "Laravel package for sending error notifications to Telegram channels with detailed context and stack traces",
     "type": "library",
     "keywords": [
@@ -8,10 +8,10 @@
         "error-notification",
         "error-tracking",
         "monitoring",
-        "watchdog",
+        "alert",
         "technobase"
     ],
-    "homepage": "https://github.com/technobase/watchdog",
+    "homepage": "https://github.com/technobase/alert",
     "license": "MIT",
     "authors": [
         {
@@ -32,18 +32,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Technobase\\Watchdog\\": "src/"
+            "Technobase\\Alert\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Technobase\\Watchdog\\Tests\\": "tests/"
+            "Technobase\\Alert\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Technobase\\Watchdog\\WatchdogServiceProvider"
+                "Technobase\\Alert\\AlertServiceProvider"
             ]
         }
     },

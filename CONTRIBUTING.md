@@ -1,11 +1,11 @@
-# Contributing to Watchdog
+# Contributing to Alert
 
-Thank you for considering contributing to Watchdog! We welcome contributions from the community.
+Thank you for considering contributing to Alert! We welcome contributions from the community.
 
 ## Development Setup
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/watchdog.git`
+2. Clone your fork: `git clone https://github.com/your-username/alert.git`
 3. Install dependencies: `composer install`
 4. Create a branch: `git checkout -b feature/your-feature-name`
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Technobase\Watchdog\Tests;
+namespace Technobase\Alert\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Technobase\Watchdog\WatchdogServiceProvider;
+use Technobase\Alert\AlertServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -18,7 +18,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            WatchdogServiceProvider::class,
+            AlertServiceProvider::class,
         ];
     }
 
@@ -28,10 +28,10 @@ abstract class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app): void
     {
         // Setup default configuration
-        config()->set('watchdog.enabled', true);
-        config()->set('watchdog.chat_id', '-1001234567890');
-        config()->set('watchdog.bot_token', 'test-token');
-        config()->set('watchdog.enabled_environments', ['production', 'staging']);
-        config()->set('watchdog.trace_lines', 10);
+        config()->set('alert.enabled', true);
+        config()->set('alert.chat_id', '-1001234567890');
+        config()->set('alert.bot_token', 'test-token');
+        config()->set('alert.enabled_environments', ['production', 'staging']);
+        config()->set('alert.trace_lines', 10);
     }
 }

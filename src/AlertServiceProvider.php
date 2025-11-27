@@ -1,14 +1,14 @@
 <?php
 
-namespace Technobase\Watchdog;
+namespace Technobase\Alert;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TelegramErrorNotification;
+use Technobase\Alert\Notifications\TelegramErrorNotification;
 use Throwable;
 
-class WatchdogServiceProvider extends ServiceProvider
+class AlertServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -16,8 +16,8 @@ class WatchdogServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/watchdog.php',
-            'watchdog'
+            __DIR__ . '/../config/alert.php',
+            'alert'
         );
     }
 
@@ -29,12 +29,12 @@ class WatchdogServiceProvider extends ServiceProvider
         // Publish config file
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/watchdog.php' => config_path('watchdog.php'),
-            ], 'watchdog-config');
+                __DIR__ . '/../config/alert.php' => config_path('alert.php'),
+            ], 'alert-config');
         }
 
         // Register exception handler if enabled
-        if (config('watchdog.enabled', true)) {
+        if (config('alert.enabled', true)) {
             $this->registerExceptionHandler();
         }
     }
@@ -47,14 +47,14 @@ class WatchdogServiceProvider extends ServiceProvider
         $this->app->make('Illuminate\Contracts\Debug\ExceptionHandler')
             ->reportable(function (Throwable $e) {
                 // Check if we should send notification based on environment
-                $enabledEnvironments = config('watchdog.enabled_environments', ['production', 'staging']);
+                $enabledEnvironments = config('alert.enabled_environments', ['production', 'staging']);
 
                 if (!in_array(app()->environment(), $enabledEnvironments)) {
                     return;
                 }
 
                 // Get chat ID from config or environment
-                $chatId = config('watchdog.chat_id') ?? env('TELEGRAM_CHAT_ID');
+                $chatId = config('alert.chat_id') ?? env('TELEGRAM_CHAT_ID');
 
                 if (empty($chatId)) {
                     return;
@@ -62,7 +62,7 @@ class WatchdogServiceProvider extends ServiceProvider
 
                 try {
                     $notification = new TelegramErrorNotification(
-                        title: config('watchdog.notification_title', '🚨 Application Error'),
+                        title: config('alert.notification_title', '🚨 Application Error'),
                         message: $e->getMessage(),
                         context: [
                             'file' => $e->getFile(),
@@ -77,7 +77,7 @@ class WatchdogServiceProvider extends ServiceProvider
                     $notifiable = Notification::route('telegram', $chatId);
 
                     // Check if notifications should be queued
-                    if (config('watchdog.queue', true)) {
+                    if (config('alert.queue', true)) {
                         $notifiable->notify($notification);
                     } else {
                         $notifiable->notifyNow($notification);
@@ -85,8 +85,8 @@ class WatchdogServiceProvider extends ServiceProvider
                 } catch (Throwable $notificationError) {
                     // Silently fail to prevent infinite loops
                     // Optionally log the notification error
-                    if (config('watchdog.log_notification_errors', false)) {
-                        logger()->error('Watchdog notification failed', [
+                    if (config('alert.log_notification_errors', false)) {
+                        logger()->error('Alert notification failed', [
                             'error' => $notificationError->getMessage(),
                         ]);
                     }

@@ -1,9 +1,9 @@
-# Watchdog Package - Complete Summary
+# Alert Package - Complete Summary
 
 ## Package Information
 
-- **Name**: `technobase/watchdog`
-- **Namespace**: `Technobase\Watchdog`
+- **Name**: `technobase/alert`
+- **Namespace**: `Technobase\Alert`
 - **Type**: Laravel Package
 - **License**: MIT
 - **Version**: 1.0.0
@@ -13,17 +13,17 @@
 ## Package Structure
 
 ```
-technobase/watchdog/
+technobase/alert/
 ├── .github/
 │   └── workflows/
 │       └── tests.yml              # GitHub Actions CI/CD workflow
 ├── config/
-│   └── watchdog.php               # Package configuration file
+│   └── alert.php               # Package configuration file
 ├── src/
 │   ├── Notifications/
 │   │   ├── TelegramErrorNotification.php   # Main error notification
 │   │   └── TestTelegramNotification.php    # Test notification
-│   └── WatchdogServiceProvider.php         # Laravel service provider
+│   └── AlertServiceProvider.php         # Laravel service provider
 ├── tests/
 │   ├── Feature/
 │   │   └── NotificationTest.php   # Feature tests
@@ -48,7 +48,7 @@ technobase/watchdog/
 - Laravel auto-discovery configuration
 - Development dependencies (PHPUnit, Orchestra Testbench)
 
-### 2. **src/WatchdogServiceProvider.php**
+### 2. **src/AlertServiceProvider.php**
 - Registers package configuration
 - Publishes config file
 - Registers exception handler
@@ -65,7 +65,7 @@ technobase/watchdog/
 - Verifies Telegram integration is working
 - Used for initial setup testing
 
-### 5. **config/watchdog.php**
+### 5. **config/alert.php**
 - All package configuration options
 - Environment variables mapping
 - Default values
@@ -92,7 +92,7 @@ technobase/watchdog/
 ### Via Composer (When Published)
 
 ```bash
-composer require technobase/watchdog
+composer require technobase/alert
 ```
 
 ### Via Local Path Repository
@@ -104,11 +104,11 @@ Add to your project's `composer.json`:
     "repositories": [
         {
             "type": "path",
-            "url": "/Users/muhammad/learning_assignments/tecnobase/watchdog"
+            "url": "/Users/muhammad/learning_assignments/tecnobase/alert"
         }
     ],
     "require": {
-        "technobase/watchdog": "@dev"
+        "technobase/alert": "@dev"
     }
 }
 ```
@@ -116,7 +116,7 @@ Add to your project's `composer.json`:
 Then run:
 
 ```bash
-composer update technobase/watchdog
+composer update technobase/alert
 ```
 
 ## Environment Setup
@@ -126,13 +126,13 @@ Add to `.env`:
 ```env
 TELEGRAM_BOT_TOKEN=your-bot-token-here
 TELEGRAM_CHAT_ID=your-chat-id-here
-WATCHDOG_ENABLED=true
+ALERT_ENABLED=true
 ```
 
 ## Publish Configuration
 
 ```bash
-php artisan vendor:publish --tag=watchdog-config
+php artisan vendor:publish --tag=alert-config
 ```
 
 ## Testing
@@ -140,7 +140,7 @@ php artisan vendor:publish --tag=watchdog-config
 Run package tests:
 
 ```bash
-cd /Users/muhammad/learning_assignments/tecnobase/watchdog
+cd /Users/muhammad/learning_assignments/tecnobase/alert
 composer install
 vendor/bin/phpunit
 ```
@@ -155,22 +155,22 @@ No code needed! Just configure `.env` and the package automatically catches all 
 
 ```php
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TestTelegramNotification;
+use Technobase\Alert\Notifications\TestTelegramNotification;
 
-Notification::route('telegram', config('watchdog.chat_id'))
-    ->notify(new TestTelegramNotification('Testing Watchdog'));
+Notification::route('telegram', config('alert.chat_id'))
+    ->notify(new TestTelegramNotification('Testing Alert'));
 ```
 
 ### Manual Error Notification
 
 ```php
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TelegramErrorNotification;
+use Technobase\Alert\Notifications\TelegramErrorNotification;
 
 try {
     // risky code
 } catch (\Exception $e) {
-    Notification::route('telegram', config('watchdog.chat_id'))
+    Notification::route('telegram', config('alert.chat_id'))
         ->notify(new TelegramErrorNotification(
             title: 'Custom Error',
             message: $e->getMessage(),
@@ -184,11 +184,11 @@ try {
 ### 1. Create GitHub Repository
 
 ```bash
-cd /Users/muhammad/learning_assignments/tecnobase/watchdog
+cd /Users/muhammad/learning_assignments/tecnobase/alert
 git init
 git add .
-git commit -m "Initial commit - Watchdog v1.0.0"
-git remote add origin https://github.com/technobase/watchdog.git
+git commit -m "Initial commit - Alert v1.0.0"
+git remote add origin https://github.com/technobase/alert.git
 git push -u origin main
 ```
 
@@ -202,7 +202,7 @@ git push origin v1.0.0
 ### 3. Submit to Packagist
 
 1. Go to [https://packagist.org/packages/submit](https://packagist.org/packages/submit)
-2. Enter repository URL: `https://github.com/technobase/watchdog`
+2. Enter repository URL: `https://github.com/technobase/alert`
 3. Click "Check"
 4. Packagist will auto-update on new GitHub releases
 
@@ -211,7 +211,7 @@ git push origin v1.0.0
 Once published, users can install with:
 
 ```bash
-composer require technobase/watchdog
+composer require technobase/alert
 ```
 
 ## CI/CD Pipeline
@@ -239,8 +239,8 @@ GitHub Actions workflow runs on every push/PR:
 
 ## Support & Maintenance
 
-- **GitHub**: https://github.com/technobase/watchdog
-- **Issues**: https://github.com/technobase/watchdog/issues
+- **GitHub**: https://github.com/technobase/alert
+- **Issues**: https://github.com/technobase/alert/issues
 - **Email**: dev@technobase.com
 - **License**: MIT (open source)
 
@@ -259,4 +259,4 @@ GitHub Actions workflow runs on every push/PR:
 
 ## Package Complete! 🎉
 
-The `technobase/watchdog` package is ready for use and publication!
+The `technobase/alert` package is ready for use and publication!

@@ -1,5 +1,5 @@
 {
-    "name": "technobase/watchdog",
+    "name": "technobase/alert",
     "description": "Laravel package for sending error notifications to Telegram channels",
     "keywords": ["laravel", "telegram", "error-tracking", "notifications"],
     "scripts": {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Technobase\Watchdog\Tests\Feature;
+namespace Technobase\Alert\Tests\Feature;
 
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TestTelegramNotification;
-use Technobase\Watchdog\Tests\TestCase;
+use Technobase\Alert\Notifications\TestTelegramNotification;
+use Technobase\Alert\Tests\TestCase;
 
 class NotificationTest extends TestCase
 {
@@ -13,11 +13,11 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        Notification::route('telegram', config('watchdog.chat_id'))
+        Notification::route('telegram', config('alert.chat_id'))
             ->notify(new TestTelegramNotification('Test message'));
 
         Notification::assertSentTo(
-            Notification::route('telegram', config('watchdog.chat_id')),
+            Notification::route('telegram', config('alert.chat_id')),
             TestTelegramNotification::class
         );
     }

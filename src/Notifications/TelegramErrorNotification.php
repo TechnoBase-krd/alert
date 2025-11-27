@@ -1,6 +1,6 @@
 <?php
 
-namespace Technobase\Watchdog\Notifications;
+namespace Technobase\Alert\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,7 +41,7 @@ class TelegramErrorNotification extends Notification implements ShouldQueue
         $this->context = $context;
 
         // Set queue connection from config
-        $queueConnection = config('watchdog.queue_connection');
+        $queueConnection = config('alert.queue_connection');
         if ($queueConnection) {
             $this->onConnection($queueConnection);
         }
@@ -85,14 +85,14 @@ class TelegramErrorNotification extends Notification implements ShouldQueue
         if (!empty($this->context['trace'])) {
             $trace = $this->context['trace'];
             $traceLines = explode("\n", $trace);
-            $maxLines = config('watchdog.trace_lines', 10);
+            $maxLines = config('alert.trace_lines', 10);
             $truncatedTrace = implode("\n", array_slice($traceLines, 0, $maxLines));
 
             $content .= "\n**Trace**:\n```\n{$truncatedTrace}\n```";
         }
         return TelegramMessage::create()
             ->content($content)
-            ->token(config('watchdog.bot_token', ''))
+            ->token(config('alert.bot_token', ''))
             ->options(['parse_mode' => 'Markdown']);
     }
 

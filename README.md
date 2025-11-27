@@ -1,8 +1,8 @@
-# Watchdog - Laravel Telegram Error Notifications
+# Alert - Laravel Telegram Error Notifications
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/technobase/watchdog.svg?style=flat-square)](https://packagist.org/packages/technobase/watchdog)
-[![Total Downloads](https://img.shields.io/packagist/dt/technobase/watchdog.svg?style=flat-square)](https://packagist.org/packages/technobase/watchdog)
-[![License](https://img.shields.io/packagist/l/technobase/watchdog.svg?style=flat-square)](https://packagist.org/packages/technobase/watchdog)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/technobase/alert.svg?style=flat-square)](https://packagist.org/packages/technobase/alert)
+[![Total Downloads](https://img.shields.io/packagist/dt/technobase/alert.svg?style=flat-square)](https://packagist.org/packages/technobase/alert)
+[![License](https://img.shields.io/packagist/l/technobase/alert.svg?style=flat-square)](https://packagist.org/packages/technobase/alert)
 
 A Laravel package for sending comprehensive error notifications to Telegram channels with detailed context, stack traces, and environment information.
 
@@ -28,7 +28,7 @@ A Laravel package for sending comprehensive error notifications to Telegram chan
 Install the package via Composer:
 
 ```bash
-composer require technobase/watchdog
+composer require technobase/alert
 ```
 
 The service provider will be automatically registered via Laravel's package discovery.
@@ -38,10 +38,10 @@ The service provider will be automatically registered via Laravel's package disc
 ### 1. Publish Configuration File
 
 ```bash
-php artisan vendor:publish --tag=watchdog-config
+php artisan vendor:publish --tag=alert-config
 ```
 
-This creates `config/watchdog.php` in your application.
+This creates `config/alert.php` in your application.
 
 ### 2. Set Environment Variables
 
@@ -55,10 +55,10 @@ TELEGRAM_BOT_TOKEN=your-bot-token-here
 TELEGRAM_CHAT_ID=your-chat-id-here
 
 # Optional: Customize settings
-WATCHDOG_ENABLED=true
-WATCHDOG_NOTIFICATION_TITLE="🚨 Application Error"
-WATCHDOG_TRACE_LINES=10
-WATCHDOG_QUEUE=true
+ALERT_ENABLED=true
+ALERT_NOTIFICATION_TITLE="🚨 Application Error"
+ALERT_TRACE_LINES=10
+ALERT_QUEUE=true
 ```
 
 ### 3. Configure Telegram Bot
@@ -75,7 +75,7 @@ WATCHDOG_QUEUE=true
 
 ### Automatic Error Notifications
 
-Once configured, Watchdog automatically catches all exceptions in production and staging environments and sends them to your Telegram channel.
+Once configured, Alert automatically catches all exceptions in production and staging environments and sends them to your Telegram channel.
 
 No additional code needed! Just let your application run.
 
@@ -85,18 +85,18 @@ Send a test notification to verify your setup:
 
 ```php
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TestTelegramNotification;
+use Technobase\Alert\Notifications\TestTelegramNotification;
 
-Notification::route('telegram', config('watchdog.chat_id'))
-    ->notify(new TestTelegramNotification('Testing Watchdog integration'));
+Notification::route('telegram', config('alert.chat_id'))
+    ->notify(new TestTelegramNotification('Testing Alert integration'));
 ```
 
 Or create a test route:
 
 ```php
-Route::get('/test-watchdog', function() {
-    \Notification::route('telegram', config('watchdog.chat_id'))
-        ->notify(new \Technobase\Watchdog\Notifications\TestTelegramNotification());
+Route::get('/test-alert', function() {
+    \Notification::route('telegram', config('alert.chat_id'))
+        ->notify(new \Technobase\Alert\Notifications\TestTelegramNotification());
     
     return 'Test notification sent!';
 });
@@ -108,13 +108,13 @@ You can manually send error notifications:
 
 ```php
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TelegramErrorNotification;
+use Technobase\Alert\Notifications\TelegramErrorNotification;
 
 try {
     // Your code that might fail
     riskyOperation();
 } catch (\Exception $e) {
-    Notification::route('telegram', config('watchdog.chat_id'))
+    Notification::route('telegram', config('alert.chat_id'))
         ->notify(new TelegramErrorNotification(
             title: 'Custom Error Title',
             message: $e->getMessage(),
@@ -131,7 +131,7 @@ try {
 
 ### Disabling for Specific Environments
 
-Edit `config/watchdog.php`:
+Edit `config/alert.php`:
 
 ```php
 'enabled_environments' => [
@@ -144,24 +144,24 @@ Edit `config/watchdog.php`:
 Or disable entirely:
 
 ```env
-WATCHDOG_ENABLED=false
+ALERT_ENABLED=false
 ```
 
 ## Configuration Options
 
 | Option | Environment Variable | Default | Description |
 |--------|---------------------|---------|-------------|
-| `enabled` | `WATCHDOG_ENABLED` | `true` | Enable/disable package |
+| `enabled` | `ALERT_ENABLED` | `true` | Enable/disable package |
 | `bot_token` | `TELEGRAM_BOT_TOKEN` | `null` | Telegram bot API token |
 | `chat_id` | `TELEGRAM_CHAT_ID` | `null` | Telegram chat/channel ID |
 | `enabled_environments` | - | `['production', 'staging']` | Environments to send notifications |
-| `notification_title` | `WATCHDOG_NOTIFICATION_TITLE` | `🚨 Application Error` | Title of error notifications |
-| `trace_lines` | `WATCHDOG_TRACE_LINES` | `10` | Max stack trace lines |
-| `queue` | `WATCHDOG_QUEUE` | `true` | Queue notifications |
-| `queue_connection` | `WATCHDOG_QUEUE_CONNECTION` | `null` | Queue connection to use |
-| `log_notification_errors` | `WATCHDOG_LOG_ERRORS` | `false` | Log notification failures |
-| `include_request_data` | `WATCHDOG_INCLUDE_REQUEST` | `true` | Include URL & user ID |
-| `include_environment` | `WATCHDOG_INCLUDE_ENV` | `true` | Include environment name |
+| `notification_title` | `ALERT_NOTIFICATION_TITLE` | `🚨 Application Error` | Title of error notifications |
+| `trace_lines` | `ALERT_TRACE_LINES` | `10` | Max stack trace lines |
+| `queue` | `ALERT_QUEUE` | `true` | Queue notifications |
+| `queue_connection` | `ALERT_QUEUE_CONNECTION` | `null` | Queue connection to use |
+| `log_notification_errors` | `ALERT_LOG_ERRORS` | `false` | Log notification failures |
+| `include_request_data` | `ALERT_INCLUDE_REQUEST` | `true` | Include URL & user ID |
+| `include_environment` | `ALERT_INCLUDE_ENV` | `true` | Include environment name |
 
 ## Example Telegram Notification
 
@@ -201,7 +201,7 @@ WATCHDOG_ENABLED=false
 
 1. **Check environment**: Verify `APP_ENV=production` or `staging`
 2. **Check config**: Run `php artisan config:cache` after changes
-3. **Check logs**: Enable `WATCHDOG_LOG_ERRORS=true` and check `storage/logs/laravel.log`
+3. **Check logs**: Enable `ALERT_LOG_ERRORS=true` and check `storage/logs/laravel.log`
 4. **Check queue**: If using queues, ensure queue worker is running: `php artisan queue:work`
 
 ### DNS Resolution Errors
@@ -218,7 +218,7 @@ If you see `Could not resolve host: api.telegram.org`:
 If notifications arrive late:
 
 1. **Check queue worker**: `php artisan queue:work` must be running
-2. **Disable queue**: Set `WATCHDOG_QUEUE=false` for immediate sending
+2. **Disable queue**: Set `ALERT_QUEUE=false` for immediate sending
 3. **Check queue connection**: Verify your `QUEUE_CONNECTION` is working
 
 ## Security

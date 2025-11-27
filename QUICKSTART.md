@@ -1,11 +1,11 @@
-# Watchdog - Quick Start Guide
+# Alert - Quick Start Guide
 
-Get up and running with Watchdog in 5 minutes!
+Get up and running with Alert in 5 minutes!
 
 ## Step 1: Install Package
 
 ```bash
-composer require technobase/watchdog
+composer require technobase/alert
 ```
 
 ## Step 2: Create Telegram Bot
@@ -35,10 +35,10 @@ TELEGRAM_CHAT_ID=your-channel-id-here
 ## Step 5: Publish Config (Optional)
 
 ```bash
-php artisan vendor:publish --tag=watchdog-config
+php artisan vendor:publish --tag=alert-config
 ```
 
-This creates `config/watchdog.php` for advanced configuration.
+This creates `config/alert.php` for advanced configuration.
 
 ## Step 6: Test Integration
 
@@ -46,17 +46,17 @@ Create a test route in `routes/web.php` or `routes/api.php`:
 
 ```php
 use Illuminate\Support\Facades\Notification;
-use Technobase\Watchdog\Notifications\TestTelegramNotification;
+use Technobase\Alert\Notifications\TestTelegramNotification;
 
-Route::get('/test-watchdog', function() {
-    Notification::route('telegram', config('watchdog.chat_id'))
+Route::get('/test-alert', function() {
+    Notification::route('telegram', config('alert.chat_id'))
         ->notify(new TestTelegramNotification());
     
     return 'Check your Telegram channel!';
 });
 ```
 
-Visit `http://your-app.test/test-watchdog` and check your Telegram channel for a test message.
+Visit `http://your-app.test/test-alert` and check your Telegram channel for a test message.
 
 ## Step 7: Test Error Notifications
 
@@ -64,7 +64,7 @@ Create an error test route:
 
 ```php
 Route::get('/test-error', function() {
-    throw new \Exception('Test error - Watchdog should catch this!');
+    throw new \Exception('Test error - Alert should catch this!');
 });
 ```
 
@@ -72,11 +72,11 @@ Make sure your `APP_ENV` is set to `production` or `staging` in `.env`, then vis
 
 ## That's It! 🎉
 
-Watchdog is now monitoring your application. All exceptions in production/staging will be sent to your Telegram channel automatically.
+Alert is now monitoring your application. All exceptions in production/staging will be sent to your Telegram channel automatically.
 
 ## Next Steps
 
-- **Customize notifications**: Edit `config/watchdog.php`
+- **Customize notifications**: Edit `config/alert.php`
 - **Multiple environments**: Create separate channels for production and staging
 - **Queue worker**: Make sure your queue worker is running for async notifications
 - **Read full docs**: Check [README.md](README.md) for all features

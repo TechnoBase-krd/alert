@@ -1,6 +1,6 @@
 <?php
 
-namespace Technobase\Watchdog\Notifications;
+namespace Technobase\Alert\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,12 +29,12 @@ class TestTelegramNotification extends Notification implements ShouldQueue
 
     private string $message;
 
-    public function __construct(string $message = 'Test notification from Watchdog')
+    public function __construct(string $message = 'Test notification from Alert')
     {
         $this->message = $message;
 
         // Set queue connection from config
-        $queueConnection = config('watchdog.queue_connection');
+        $queueConnection = config('alert.queue_connection');
         if ($queueConnection) {
             $this->onConnection($queueConnection);
         }
@@ -54,8 +54,8 @@ class TestTelegramNotification extends Notification implements ShouldQueue
     public function toTelegram(object $notifiable): TelegramMessage
     {
         return TelegramMessage::create()
-            ->content("🧪 **Test Notification**\n\n{$this->message}\n\n✅ Watchdog Telegram integration is working!")
-            ->token(config('watchdog.bot_token', ''))
+            ->content("🧪 **Test Notification**\n\n{$this->message}\n\n✅ Alert Telegram integration is working!")
+            ->token(config('alert.bot_token', ''))
             ->options(['parse_mode' => 'Markdown']);
     }
 

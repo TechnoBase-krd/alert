@@ -8,7 +8,7 @@
          cacheDirectory=".phpunit.cache"
          beStrictAboutOutputDuringTests="true">
     <testsuites>
-        <testsuite name="Watchdog Test Suite">
+        <testsuite name="Alert Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

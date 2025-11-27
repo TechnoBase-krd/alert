@@ -4,15 +4,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Watchdog Enabled
+    | Alert Enabled
     |--------------------------------------------------------------------------
     |
-    | This option controls whether Watchdog error notifications are enabled.
+    | This option controls whether Alert error notifications are enabled.
     | Set to false to completely disable the package functionality.
     |
     */
 
-    'enabled' => env('WATCHDOG_ENABLED', true),
+    'enabled' => env('ALERT_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'notification_title' => env('WATCHDOG_NOTIFICATION_TITLE', '🚨 Application Error'),
+    'notification_title' => env('ALERT_NOTIFICATION_TITLE', '🚨 Application Error'),
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ return [
     |
     */
 
-    'trace_lines' => env('WATCHDOG_TRACE_LINES', 10),
+    'trace_lines' => env('ALERT_TRACE_LINES', 10),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
     |
     */
 
-    'queue' => env('WATCHDOG_QUEUE', true),
+    'queue' => env('ALERT_QUEUE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -99,7 +99,7 @@ return [
     |
     */
 
-    'queue_connection' => env('WATCHDOG_QUEUE_CONNECTION', null),
+    'queue_connection' => env('ALERT_QUEUE_CONNECTION', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ return [
     |
     */
 
-    'log_notification_errors' => env('WATCHDOG_LOG_ERRORS', false),
+    'log_notification_errors' => env('ALERT_LOG_ERRORS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
     |
     */
 
-    'include_request_data' => env('WATCHDOG_INCLUDE_REQUEST', true),
+    'include_request_data' => env('ALERT_INCLUDE_REQUEST', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -135,6 +135,6 @@ return [
     |
     */
 
-    'include_environment' => env('WATCHDOG_INCLUDE_ENV', true),
+    'include_environment' => env('ALERT_INCLUDE_ENV', true),
 
 ];
