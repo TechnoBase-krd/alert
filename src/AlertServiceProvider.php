@@ -53,8 +53,8 @@ class AlertServiceProvider extends ServiceProvider
                     return;
                 }
 
-                // Get chat ID from config or environment
-                $chatId = config('alert.chat_id') ?? env('TELEGRAM_CHAT_ID');
+                // Get chat ID from config
+                $chatId = config('alert.chat_id');
 
                 if (empty($chatId)) {
                     return;
@@ -67,7 +67,7 @@ class AlertServiceProvider extends ServiceProvider
                         context: [
                             'file' => $e->getFile(),
                             'line' => $e->getLine(),
-                            'url' => request()?->fullUrl(),
+                            'url' => request()->fullUrl(),
                             'user_id' => Auth::id(),
                             'environment' => app()->environment(),
                             'trace' => $e->getTraceAsString(),

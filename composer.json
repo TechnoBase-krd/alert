@@ -27,7 +27,10 @@
   },
   "require-dev": {
         "orchestra/testbench": "^9.0 || ^10.0",
-        "phpunit/phpunit": "^11.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "larastan/larastan": "^3.0",
         "mockery/mockery": "^1.6"
     },
     "autoload": {
@@ -39,6 +42,12 @@
         "psr-4": {
             "Technobase\\Alert\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "phpstan": "vendor/bin/phpstan analyse --ansi --memory-limit=512M",
+        "format": "vendor/bin/pint"
     },
     "extra": {
         "laravel": {
