@@ -273,8 +273,8 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 ## Support
 
-For support, please contact [dev@technobase.com](mailto:dev@technobase.com) or open an issue on GitHub.
+For support, please contact [dev@technobase.krd](mailto:dev@technobase.krd) or open an issue on GitHub.
 
 ---
 
-Made with ❤️ by [Technobase](https://technobase.com)
+Made with ❤️ by [Technobase](https://technobase.krd)
