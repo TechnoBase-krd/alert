@@ -18,8 +18,8 @@ A Laravel package for sending comprehensive error notifications to Telegram chan
 
 ## Requirements
 
-- PHP 8.2 or higher
-- Laravel 11.x or 12.x
+- PHP 8.3 or higher
+- Laravel 12.x or 13.x
 - A Telegram Bot Token (get one from [@BotFather](https://t.me/BotFather))
 - A Telegram Channel/Group/Chat ID
 
