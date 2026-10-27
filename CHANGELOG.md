@@ -5,7 +5,7 @@ All notable changes to `technobase/alert` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/technobase/alert/compare/1.0.1...HEAD)
+## [Unreleased](https://github.com/technobase/alert/compare/v1.1.0...HEAD)
 
 ## [1.0.0](https://github.com/technobase/alert/releases/tag/v1.0.0) - 2025-11-26
 
@@ -30,6 +30,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic try-catch wrapper to prevent notification failures from breaking app
 - Option to disable sensitive data in notifications
 - Environment filtering to prevent spam in development
+
+## [v1.1.0](https://github.com/technobase/alert/compare/1.0.1...v1.1.0) - 2026-10-27
+
+### What's Changed
+
+* chore(deps): Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/TechnoBase-krd/alert/pull/3
+* feat: Update requirements for PHP and Laravel to support Laravel 13 by @mhamadYaseen in https://github.com/TechnoBase-krd/alert/pull/7
+
+### New Contributors
+
+* @mhamadYaseen made their first contribution in https://github.com/TechnoBase-krd/alert/pull/7
+
+**Full Changelog**: https://github.com/TechnoBase-krd/alert/compare/1.0.1...v1.1.0
 
 ## [1.0.1](https://github.com/technobase/alert/compare/v1.0.0...1.0.1) - 2025-11-28
 
